@@ -1,0 +1,317 @@
+    /* Base body style */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #121826;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        transition: background-color 0.3s ease;
+    }
+
+    /* estilos para la imagen de carga */
+    @keyframes fade {
+        0%, 100% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+    }
+
+    .animate-fade {
+        animation: fade 2s infinite;
+    }
+
+    @keyframes zoom {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+    }
+
+    .animate-zoom {
+        animation: zoom 1.5s infinite ease-in-out;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .animate-spin {
+        animation: spin 1.5s linear infinite;
+    }
+
+    .filter {
+        filter: drop-shadow(0px 10px 15px rgba(255, 255, 255, 0.3));
+    }
+
+    #loading {
+        transition: opacity 1s ease-in-out;
+    }
+
+
+
+    /* Sidebar Styles */
+    .sidebar {
+        height: 100vh;
+        width: 280px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #1a2136;
+        color: white;
+        padding: 20px;
+        overflow-y: auto;
+        transition: width 0.3s ease, background-color 0.3s ease;
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar.collapsed {
+        width: 80px;
+    }
+
+    .sidebar h4 {
+        text-align: center;
+        color: #fff;
+        font-size: 1.3rem;
+        margin-bottom: 25px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+    }
+
+    .sidebar.collapsed h4 {
+        opacity: 0;
+    }
+
+    .sidebar a {
+        text-decoration: none;
+        color: #c2c7d0;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        margin-bottom: 10px;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+        background: linear-gradient(90deg, #6b21a8, #7c3aed);
+        color: white;
+        box-shadow: 0 5px 15px rgba(109, 40, 217, 0.4);
+        transform: scale(1.05);
+    }
+
+    .sidebar.collapsed a {
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .sidebar.collapsed a span {
+        display: none;
+    }
+
+    .sidebar a i {
+        font-size: 1.5rem;
+        margin-right: 15px;
+        transition: margin-right 0.3s ease, color 0.3s ease;
+    }
+
+    .sidebar.collapsed a i {
+        margin-right: 0;
+    }
+
+    .submenu {
+        padding-left: 20px;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .submenu a {
+        padding: 8px 0;
+    }
+
+    .sidebar.collapsed .submenu {
+        display: none;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+        background: linear-gradient(90deg, #1a2136, #2b344a);
+        border-bottom: 1px solid #3a4056;
+        margin-left: 280px;
+        padding: 10px 30px;
+        transition: margin-left 0.3s ease;
+    }
+
+    .navbar.collapsed {
+        margin-left: 80px;
+    }
+
+    .navbar .navbar-brand {
+        color: #fff;
+        font-weight: bold;
+        font-size: 1.4rem;
+    }
+
+    .navbar .form-control {
+        background-color: #252b3a;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+    }
+
+    .navbar .form-control:focus {
+        box-shadow: none;
+    }
+
+    .navbar .nav-item .nav-link {
+        color: #c2c7d0;
+        font-size: 1.1rem;
+        margin: 0 15px;
+    }
+
+    .navbar .nav-item .nav-link:hover {
+        color: #fff;
+        transform: scale(1.1);
+    }
+
+
+    #toggleSidebar {
+        margin-right: 50px;
+        /* Elimina cualquier margen derecho */
+        margin-left: -30px;
+        /* Asegura que no haya margen izquierdo */
+    }
+
+    .navbar .container-fluid {
+        padding-left: 0;
+        /* Elimina el padding izquierdo del contenedor */
+    }
+
+    /* Content Styles 
+    .content {
+        margin-left: 280px;
+        padding: 20px;
+        transition: margin-left 0.3s ease;
+    }
+
+    .content.collapsed {
+        margin-left: 80px;
+    }*/
+
+    .card {
+        background-color: #1a1d24;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .card h5 {
+        color: #f0f0f0;
+        font-size: 1.6rem;
+    }
+
+    .card p {
+        color: #c2c7d0;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        background-color: #6b21a8;
+        /* Color base similar a #6d28d9 */
+        border: none;
+        border-radius: 50px;
+        padding: 10px 30px;
+        font-size: 1rem;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #7c3aed;
+        /* Color más claro para el efecto hover */
+        transform: scale(1.05);
+    }
+
+    .btn-outline-light {
+        color: #fff;
+        /* Color de texto basado en el tono deseado */
+        border: 2px solid transparent;
+        /* Borde con el color base */
+        background-color: transparent;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-outline-light:hover {
+        background-color: transparent;
+        /* Fondo lleno en hover */
+        color: white;
+        /* Texto blanco para contraste */
+        transform: scale(1.05);
+        /* Efecto de escala */
+    }
+
+    .brand {
+        display: flex;
+        /* Configura un contenedor flexible */
+        align-items: center;
+        /* Alinea los elementos verticalmente */
+        gap: 10px;
+        /* Espacio entre el logo y el texto */
+    }
+
+    .brand-logo {
+        width: 40px;
+        /* Ajusta el tamaño del logo */
+        height: auto;
+        /* Mantiene la proporción del logo */
+        display: block;
+        /* Asegura que la imagen sea tratada como un bloque dentro del flujo */
+    }
+
+    .brand h4 {
+        margin: 0;
+        /* Elimina márgenes extra del texto */
+        font-size: 1.25rem;
+        /* Ajusta el tamaño del texto si es necesario */
+        line-height: 1;
+        /* Mantén una línea compacta para la alineación */
+    }
+
+
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .content {
+            margin-left: 0;
+        }
+
+        .navbar {
+            margin-left: 0;
+        }
+    }
+
+    /* Ocultar el icono de la fecha hacia abajo cuando el menú se colapsa */
+    .sidebar.collapsed .date-icon,
+    .navbar.collapsed .date-icon {
+        display: none;
+    }
