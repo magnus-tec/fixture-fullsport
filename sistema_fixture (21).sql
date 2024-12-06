@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-12-2024 a las 15:44:20
+-- Tiempo de generación: 06-12-2024 a las 17:21:34
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -47,7 +47,8 @@ CREATE TABLE `fixtures` (
 
 INSERT INTO `fixtures` (`id`, `tournament_version_id`, `round`, `home_team_id`, `away_team_id`, `match_date`, `match_time`, `venue`, `status`, `home_team_score`, `away_team_score`) VALUES
 (1, 1, 'Regular', 7, 8, '2024-12-05', '13:00:00', NULL, 'Programado', NULL, NULL),
-(2, 2, 'Regular', 9, 10, '2024-12-05', '13:00:00', NULL, 'Completado', 3, 0);
+(2, 2, 'Regular', 9, 10, '2024-12-05', '13:00:00', NULL, 'Completado', 0, 3),
+(3, 3, 'Regular', 11, 12, '2024-12-07', '13:00:00', NULL, 'Completado', 4, 2);
 
 -- --------------------------------------------------------
 
@@ -63,6 +64,19 @@ CREATE TABLE `match_events` (
   `card_type` enum('yellow','red') DEFAULT NULL,
   `minute` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `match_players`
+--
+
+CREATE TABLE `match_players` (
+  `id` int(11) NOT NULL,
+  `fixture_id` int(11) NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `is_starter` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -165,7 +179,9 @@ INSERT INTO `standings` (`id`, `tournament_version_id`, `team_id`, `played`, `wo
 (1, 1, 7, 0, 0, 0, 0, 0, 0, 0),
 (2, 1, 8, 0, 0, 0, 0, 0, 0, 0),
 (3, 2, 9, 0, 0, 0, 0, 0, 0, 0),
-(4, 2, 10, 0, 0, 0, 0, 0, 0, 0);
+(4, 2, 10, 0, 0, 0, 0, 0, 0, 0),
+(5, 3, 11, 0, 0, 0, 0, 0, 0, 0),
+(6, 3, 12, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -200,7 +216,9 @@ INSERT INTO `teams` (`id`, `name`, `country`, `color`, `user_id`, `tournament_id
 (7, 'Real Madrid', 'España', '#ffffff', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, '../public/uploads2/logos/6751bf0fe1c62_Real-Madrid-logo (1).jpg', 1, NULL, 0),
 (8, 'FC Barcelona', 'España', '#091677', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, '../public/uploads2/logos/6743b1c55433d_fc-barcelona-logo-on-transparent-background-free-vector.jpg', 1, NULL, 0),
 (9, 'FC Barcelona', 'España', '#002aff', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, '../public/uploads2/logos/6752993c71a4a_6743b1c55433d_fc-barcelona-logo-on-transparent-background-free-vector.jpg', 2, NULL, 0),
-(10, 'Real Madrid', 'España', '#002aff', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, '../public/uploads2/logos/6752994ee40e8_Real-Madrid-logo (1).jpg', 2, NULL, 0);
+(10, 'Real Madrid', 'España', '#002aff', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, '../public/uploads2/logos/6752994ee40e8_Real-Madrid-logo (1).jpg', 2, NULL, 0),
+(11, 'Universitario', 'Peru', '#bbd265', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, '../public/uploads2/logos/675320a561bc1_soccer.jpg', 3, NULL, 0),
+(12, 'Alianza Lima', 'Peru', '#bbd265', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, '../public/uploads2/logos/675320ad940de_soccer.jpg', 3, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -250,7 +268,8 @@ CREATE TABLE `tournament_categories` (
 
 INSERT INTO `tournament_categories` (`id`, `tournament_version_id`, `name`, `description`) VALUES
 (18, NULL, 'Grupo A', 'Sub12'),
-(21, 2, 'Grupo C', 'fgfg');
+(21, 2, 'Grupo C', 'fgfg'),
+(22, 3, 'Grupo A', 'Sub12');
 
 -- --------------------------------------------------------
 
@@ -275,7 +294,9 @@ CREATE TABLE `tournament_versions` (
 --
 
 INSERT INTO `tournament_versions` (`id`, `tournament_id`, `format_type`, `name`, `points_winner`, `points_draw`, `points_loss`, `points_walkover`, `created_at`) VALUES
-(2, 1, 'Liga', 'Copa Paita 2024 - Liga', 3, 1, 0, 0, '2024-12-06 03:20:39');
+(2, 1, 'Liga', 'Copa Paita 2024 - Liga', 3, 1, 0, 0, '2024-12-06 03:20:39'),
+(3, 1, 'Liga', 'Copa Paita 2024 - Liga', 3, 1, 0, 0, '2024-12-06 16:02:43'),
+(4, 1, 'Liga', 'Copa Paita 2024 - Liga', 3, 1, 0, 0, '2024-12-06 16:09:17');
 
 -- --------------------------------------------------------
 
@@ -308,7 +329,9 @@ CREATE TABLE `tournament_version_details` (
 --
 
 INSERT INTO `tournament_version_details` (`id`, `version_id`, `tournament_name`, `start_date`, `end_date`, `country`, `city`, `address`, `registration_fee`, `google_maps_url`, `playing_days`, `match_time_range`, `status`, `created_at`, `cover_image`, `prizes`, `tournament_bases`) VALUES
-(0, 2, 'Copa Paita 2024 - Liga', '2024-12-05', '2025-01-05', 'Peru', 'Piura - Piura', 'Estadio Hermanos Carcamo', 0.00, 'https://maps.app.goo.gl/WooVks3XJTMaejCEA', 'Martes,Jueves,Sábado', '1:00 PM - 7:00 PM', 'Pendiente', '2024-12-06 03:20:39', NULL, NULL, NULL);
+(0, 2, 'Copa Paita 2024 - Liga', '2024-12-05', '2025-01-05', 'Peru', 'Piura - Piura', 'Estadio Hermanos Carcamo', 0.00, 'https://maps.app.goo.gl/WooVks3XJTMaejCEA', 'Martes,Jueves,Sábado', '1:00 PM - 7:00 PM', 'Pendiente', '2024-12-06 03:20:39', NULL, NULL, NULL),
+(0, 3, 'Copa Paita 2024 - Liga', '2024-12-06', '2025-01-17', 'Peru', 'Piura', 'Estadio Monumental', 50.00, 'https://maps.app.goo.gl/WooVks3XJTMaejCEA', 'Martes,Jueves,Sábado', '1:00 PM - 7:00 PM', 'En Progreso', '2024-12-06 16:02:43', NULL, NULL, NULL),
+(0, 4, 'Copa Paita 2024 - Liga', '2024-12-06', '2025-01-06', 'Peru', '', '', 0.00, NULL, '', '', 'Pendiente', '2024-12-06 16:09:17', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -360,6 +383,14 @@ ALTER TABLE `fixtures`
 -- Indices de la tabla `match_events`
 --
 ALTER TABLE `match_events`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fixture_id` (`fixture_id`),
+  ADD KEY `player_id` (`player_id`);
+
+--
+-- Indices de la tabla `match_players`
+--
+ALTER TABLE `match_players`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fixture_id` (`fixture_id`),
   ADD KEY `player_id` (`player_id`);
@@ -431,13 +462,19 @@ ALTER TABLE `usertable`
 -- AUTO_INCREMENT de la tabla `fixtures`
 --
 ALTER TABLE `fixtures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `match_events`
 --
 ALTER TABLE `match_events`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `match_players`
+--
+ALTER TABLE `match_players`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `members`
@@ -455,13 +492,13 @@ ALTER TABLE `players`
 -- AUTO_INCREMENT de la tabla `standings`
 --
 ALTER TABLE `standings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `tournaments`
@@ -473,13 +510,13 @@ ALTER TABLE `tournaments`
 -- AUTO_INCREMENT de la tabla `tournament_categories`
 --
 ALTER TABLE `tournament_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `tournament_versions`
 --
 ALTER TABLE `tournament_versions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usertable`
@@ -497,6 +534,13 @@ ALTER TABLE `usertable`
 ALTER TABLE `match_events`
   ADD CONSTRAINT `match_events_ibfk_1` FOREIGN KEY (`fixture_id`) REFERENCES `fixtures` (`id`),
   ADD CONSTRAINT `match_events_ibfk_2` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`);
+
+--
+-- Filtros para la tabla `match_players`
+--
+ALTER TABLE `match_players`
+  ADD CONSTRAINT `match_players_ibfk_1` FOREIGN KEY (`fixture_id`) REFERENCES `fixtures` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `match_players_ibfk_2` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `members`
