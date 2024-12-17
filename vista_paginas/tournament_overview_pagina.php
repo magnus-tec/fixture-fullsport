@@ -313,8 +313,7 @@ $tournaments = $result->fetch_all(MYSQLI_ASSOC);
                         <!-- Estado -->
                         <div class="flex items-center">
                             <span class="px-3 py-1 rounded-full text-sm
-                    <?php echo $tournament_data['status'] == 'Pendiente' ? 'bg-yellow-500/20 text-yellow-500' :
-                        ($tournament_data['status'] == 'En Progreso' ? 'bg-green-500/20 text-green-500' :
+                    <?php echo $tournament_data['status'] == 'Pendiente' ? 'bg-yellow-500/20 text-yellow-500' : ($tournament_data['status'] == 'En Progreso' ? 'bg-green-500/20 text-green-500' :
                             'bg-blue-500/20 text-blue-500'); ?>">
                                 <?php echo htmlspecialchars($tournament_data['status']); ?>
                             </span>
@@ -419,14 +418,14 @@ $tournaments = $result->fetch_all(MYSQLI_ASSOC);
 
     <script>
         // Mostrar el GIF de carga durante 4 segundos
-        setTimeout(function () {
+        setTimeout(function() {
             document.getElementById('loading').style.display = 'none';
-        }, 1500); 
+        }, 1500);
     </script>
 
     <script>
         // Toggle sidebar and content collapse
-        document.getElementById('toggleSidebar').addEventListener('click', function () {
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
             document.getElementById('sidebar').classList.toggle('collapsed');
             document.getElementById('navbar').classList.toggle('collapsed');
             document.getElementById('content').classList.toggle('collapsed');
