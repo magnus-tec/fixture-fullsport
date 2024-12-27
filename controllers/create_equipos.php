@@ -8,12 +8,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $color = $_POST['color'] ?? null;
     $tournament_id = $_POST['tournament_id'] ?? null;
     $tournament_version_id = $_POST['tournament_version_id'] ?? null;
+    $category_id = $_POST['category_id'] ?? null;
 
     // Ruta del logo por defecto
     $defaultLogoPath = "../public/img/default-logo.png";
     $logoFileName = $defaultLogoPath;
 
-    if ($tournament_id && $tournament_version_id && $team_name && $country && $color) {
+    if ($tournament_id && $tournament_version_id && $team_name && $country && $color && $category_id) {
         $checkTeamSql = "SELECT * FROM teams WHERE name = ? AND tournament_version_id = ?";
         $checkTeamStmt = $con->prepare($checkTeamSql);
         $checkTeamStmt->bind_param("si", $team_name, $tournament_version_id);
@@ -37,9 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        $sql = "INSERT INTO teams (name, country, color, user_id, tournament_id, tournament_version_id, logo) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO teams (name, country, color, user_id, tournament_id, tournament_version_id, logo, category_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("ssssiss", $team_name, $country, $color, $_SESSION['user_id'], $tournament_id, $tournament_version_id, $logoFileName);
+        $stmt->bind_param("ssssisss", $team_name, $country, $color, $_SESSION['user_id'], $tournament_id, $tournament_version_id, $logoFileName, $category_id);
 
         if ($stmt->execute()) {
             echo json_encode(['success' => true, 'message' => 'Equipo creado exitosamente.']);

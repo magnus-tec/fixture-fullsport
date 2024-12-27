@@ -9,6 +9,7 @@ if (!isset($_SESSION['email'])) {
 
 $tournament_id = $_GET['tournament_id'] ?? null;
 $version_id = $_GET['version_id'] ?? null;
+$category_id = $_GET['category_id'] ?? null;
 
 if (!$tournament_id || !$version_id) {
     header("Location: tournaments.php");
@@ -290,7 +291,7 @@ if (!$tournament_data) {
                     <!-- Botón Mis Equipos (Morado) -->
                     <button
                         class="px-4 py-2 bg-[#6F42C1] text-white rounded-lg hover:bg-[#5a2d98] transition duration-300 ease-in-out transform hover:scale-105"
-                        onclick="window.location.href='tournament_teams.php?tournament_id=<?php echo $tournament_id; ?>&version_id=<?php echo $version_id; ?>'"
+                        onclick="window.location.href='tournament_teams.php?tournament_id=<?php echo $tournament_id; ?>&version_id=<?php echo $version_id; ?>&category_id=<?php echo $category_id ?>'"
                         aria-label="Ver mis equipos">
                         <i class="ri-team-line text-lg"></i> Mis Equipos
                     </button>
@@ -298,7 +299,7 @@ if (!$tournament_data) {
                     <!-- Botón Ver (Azul) -->
                     <button
                         class="px-4 py-2 bg-[#04376e] text-white rounded-lg hover:bg-[#13357b] transition duration-300 ease-in-out transform hover:scale-105 flex items-center gap-2"
-                        onclick="window.location.href = 'calendar.php?tournament_id=<?php echo $tournament_id; ?>&version_id=<?php echo $version_id; ?>'"
+                        onclick="window.location.href = 'calendar.php?tournament_id=<?php echo $tournament_id; ?>&version_id=<?php echo $version_id; ?>&category_id=<?php echo $category_id ?>'"
                         aria-label="Ver calendario del torneo">
                         <i class="ri-calendar-line text-lg"></i> Calendario
                     </button>
@@ -720,6 +721,7 @@ if (!$tournament_data) {
             <form id="teamsForm" class="space-y-4" enctype="multipart/form-data">
                 <input type="hidden" name="tournament_id" value="<?php echo htmlspecialchars($tournament_id); ?>">
                 <input type="hidden" name="tournament_version_id" value="<?php echo htmlspecialchars($version_id); ?>">
+                <input type="hidden" name="category_id" value="<?php echo htmlspecialchars($category_id); ?>">
 
                 <div>
                     <label for="teamName" class="block text-sm font-medium mb-1 text-white">Nombre de tu Equipo:</label>
@@ -753,7 +755,7 @@ if (!$tournament_data) {
                     <div id="logoPreviewContainer"
                         class="w-24 h-24 border border-gray-700 rounded overflow-hidden flex items-center justify-center cursor-pointer"
                         onclick="document.getElementById('teamLogo').click();">
-                        <input type="file" name="logo" id="teamLogo" accept="image/*" class="hidden" required>
+                        <input type="file" name="logo" id="teamLogo" accept="image/*" class="hidden" >
                         <img id="logoPreview" src="" alt="Vista previa del logo"
                             class="hidden w-full h-full object-cover">
                         <span class="text-gray-400">Seleccionar Logo</span>

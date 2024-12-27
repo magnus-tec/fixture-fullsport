@@ -8,6 +8,7 @@ require_once "../config/connection.php";
 
 $tournament_id = $_GET['tournament_id'] ?? null;
 $version_id = $_GET['version_id'] ?? null;
+$category_id = $_GET['category_id'] ?? null;
 
 if (!$tournament_id || !$version_id) {
     header("Location: tournaments.php");
@@ -15,9 +16,9 @@ if (!$tournament_id || !$version_id) {
 }
 
 // Obtener equipos de la versión específica del torneo
-$sql = "SELECT * FROM teams WHERE tournament_id = ? AND tournament_version_id = ?";
+$sql = "SELECT * FROM teams WHERE tournament_id = ? AND tournament_version_id = ?  AND category_id = ?";
 $stmt = $con->prepare($sql);
-$stmt->bind_param("ii", $tournament_id, $version_id);
+$stmt->bind_param("iii", $tournament_id, $version_id, $category_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $teams = $result->fetch_all(MYSQLI_ASSOC);
@@ -222,6 +223,13 @@ $teams = $result->fetch_all(MYSQLI_ASSOC);
 
         <!-- Teams Content -->
         <div class="p-6">
+        <div class="flex justify-between mb-4">
+                <a href="tournament_overview.php?tournament_id=<?php echo $tournament_id; ?>
+                &version_id=<?php echo $version_id; ?>&category_id=<?php echo $category_id ?>"
+                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center space-x-2">
+                    <i class="ri-arrow-left-line"></i>
+                </a>
+            </div>
             <div class="mt-6 text-center">
                 <button id="generateFixture"
                     class="w-full mb-6 p-4 border-2 border-dashed border-gray-700 rounded-lg text-gray-400 hover:text-white hover:border-[#7C3AED] transition-colors">
@@ -373,12 +381,13 @@ $teams = $result->fetch_all(MYSQLI_ASSOC);
     document.getElementById('generateFixture').addEventListener('click', function () {
         const tournamentId = <?php echo json_encode($tournament_id); ?>;
         const versionId = <?php echo json_encode($version_id); ?>;
+        const categoryId = <?php echo json_encode($category_id); ?>;
         fetch('../controllers/generate_fixture.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ tournament_id: tournamentId, version_id: versionId })
+            body: JSON.stringify({ tournament_id: tournamentId, version_id: versionId, category_id: categoryId })
         })
         .then(response => response.json())
         .then(data => {

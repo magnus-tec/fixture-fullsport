@@ -8,6 +8,7 @@ require_once "../config/connection.php";
 
 $tournament_id = $_GET['tournament_id'] ?? null;
 $version_id = $_GET['version_id'] ?? null;
+$category_id = $_GET['category_id'] ?? null;
 
 if (!$tournament_id) {
     header("Location: tournaments.php");
@@ -196,6 +197,13 @@ $fixtures = $result->fetch_all(MYSQLI_ASSOC);
 
     <!-- Content -->
     <div class="content" id="content">
+        <div class="flex justify-between mb-4">
+                <a href="tournament_overview.php?tournament_id=<?php echo $tournament_id; ?>
+                &version_id=<?php echo $version_id; ?>&category_id=<?php echo $category_id ?>"
+                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center space-x-2">
+                    <i class="ri-arrow-left-line"></i>
+                </a>
+            </div>
         <div class="p-6">
             <h1 class="text-2xl font-bold mb-6">Calendario de Partidos</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

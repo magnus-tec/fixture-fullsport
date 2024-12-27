@@ -27,13 +27,13 @@ if (!$tournament) {
 }
 
 // Obtener versiones del torneo
-// $versions_sql = "SELECT tv.*, tc.name as category_name 
+// $versions_sql = "SELECT tv.*, tc.name as category_name, tc.id 
 //                  FROM tournament_versions tv
 //                  LEFT JOIN tournament_categories tc ON tv.id = tc.tournament_version_id
 //                  WHERE tv.tournament_id = ?";
 
 /*CONSULTA MODIFICADA*/
-$versions_sql = "SELECT tv.*,tc.*,tvd.version_id,  tvd.tournament_name as category_name 
+$versions_sql = "SELECT tv.*,tc.*,tvd.version_id,  tvd.tournament_name as category_name, tc.id as category_id
                  FROM tournament_versions tv 
                  INNER JOIN tournament_version_details tvd ON tvd.version_id = tv.id
                  LEFT JOIN tournament_categories tc ON tv.id = tc.tournament_version_id
@@ -518,7 +518,7 @@ $categoriesAndVersions = fetchCategoriesAndVersions($con, $tournament_id);
                                 <p class="text-gray-400 text-sm mt-1">0 Seguidores</p>
 
                                 <!-- Botón -->
-                                <a href="tournament_overview.php?tournament_id=<?php echo $tournament_id; ?>&version_id=<?php echo $version['tournament_version_id']; ?>"
+                                <a href="tournament_overview.php?tournament_id=<?php echo $tournament_id; ?>&version_id=<?php echo $version['tournament_version_id']; ?>&category_id=<?php echo $version['category_id'] ?>"
                                     class="mt-4 mb-3 bg-indigo-500 text-white py-2 px-6 rounded-md text-sm font-medium transition hover:bg-indigo-600">
                                     Administrar
                                 </a>
@@ -528,7 +528,6 @@ $categoriesAndVersions = fetchCategoriesAndVersions($con, $tournament_id);
                         <!-- Cerrar el último contenedor de la grilla -->
                         <?php if ($current_group !== null) echo '</div>'; ?>
                             </div>
-
 
                             <!-- Modal -->
                             <div id="categoryModal"
@@ -772,7 +771,7 @@ $categoriesAndVersions = fetchCategoriesAndVersions($con, $tournament_id);
                                                     <p class="text-gray-400 text-sm mt-1">0 Seguidores</p>
 
                                                     <!-- Botón -->
-                                                    <a href="tournament_overview.php?tournament_id=${tournament_id}&version_id=${version.version_id}"
+                                                    <a href="tournament_overview.php?tournament_id=${tournament_id}&version_id=${version.version_id}&category_id=${version.category_id}"
                                                         class="mt-4 mb-3 bg-indigo-500 text-white py-2 px-6 rounded-md text-sm font-medium transition hover:bg-indigo-600">
                                                         Administrar
                                                     </a>

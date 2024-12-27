@@ -1,7 +1,7 @@
 <?php
 require_once "../config/connection.php";
 
-function generateFixture($tournament_id, $version_id) {
+function generateFixture($tournament_id, $version_id, $category_id) {
     global $con;
     
     // Obtener detalles del torneo con la configuración de puntos
@@ -21,8 +21,8 @@ function generateFixture($tournament_id, $version_id) {
     }
     
     // Obtener equipos solo de la versión específica del torneo
-    $stmt = $con->prepare("SELECT id FROM teams WHERE tournament_id = ? AND tournament_version_id = ?");
-    $stmt->bind_param("ii", $tournament_id, $version_id);
+    $stmt = $con->prepare("SELECT id FROM teams WHERE tournament_id = ? AND tournament_version_id = ? AND category_id = ?");
+    $stmt->bind_param("iii", $tournament_id, $version_id, $category_id);
     $stmt->execute();
     $result = $stmt->get_result();
     $teams = $result->fetch_all(MYSQLI_ASSOC);
@@ -310,5 +310,5 @@ function generatePlayOffFixtures($teams, $tournament) {
 
 // Handle POST request
 $data = json_decode(file_get_contents('php://input'), true);
-$result = generateFixture($data['tournament_id'], $data['version_id']);
+$result = generateFixture($data['tournament_id'], $data['version_id'], $data['category_id']);
 echo json_encode($result);

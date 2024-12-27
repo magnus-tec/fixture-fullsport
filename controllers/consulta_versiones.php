@@ -8,7 +8,7 @@ if (isset($_POST['version_id'])) {
     error_log("version_id: " . $version_id);
 
     $select_versions_sql = "
-        SELECT * FROM tournament_categories  tc
+        SELECT *, tc.id as category_id FROM tournament_categories  tc
 JOIN tournament_version_details tvd ON tvd.version_id = tc.tournament_version_id
 WHERE tc.tournament_version_id = ?;";
 
