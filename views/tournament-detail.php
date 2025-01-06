@@ -187,6 +187,9 @@ $categoriesAndVersions = fetchCategoriesAndVersions($con, $tournament_id);
         color: white; box-shadow: 0 5px 15px rgba(109, 40, 217, 0.4); transform: scale(1.05);">
             <i class="bi bi-trophy" style="font-size: 14px;"></i><span>Mis Torneos</span>
         </a>
+        <a href="./tournament_all_teams.php?tournament_id=<?php echo $tournament_id?>" style="font-size: 12px;">
+            <i class="bi bi-person" style="font-size: 14px;"></i><span>Mis Equipos</span>
+        </a>
         <a href="./mis_equipos.php" style="font-size: 12px;">
             <i class="bi bi-person-lines-fill" style="font-size: 14px;"></i><span>Equipos</span>
         </a>

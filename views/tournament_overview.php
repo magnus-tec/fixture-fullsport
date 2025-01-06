@@ -16,6 +16,14 @@ if (!$tournament_id || !$version_id) {
     exit();
 }
 
+//Obtener el nombre de la categoria
+$sql2 = "SELECT name from tournament_categories where id = ?";
+$stmt2 = $con->prepare($sql2);
+$stmt2->bind_param("i", $category_id);
+$stmt2->execute();
+$result2 = $stmt2->get_result();
+$category_name = $result2->fetch_assoc();
+
 // Obtener detalles del torneo, versión y administrador
 $sql = "SELECT 
             t.*, 
@@ -157,7 +165,7 @@ if (!$tournament_data) {
             <i class="bi bi-trophy" style="font-size: 14px;"></i><span>Mis Torneos</span>
         </a>
         <a href="./mis_equipos.php" style="font-size: 12px;">
-            <i class="bi bi-person-lines-fill" style="font-size: 14px;"></i><span>Mis Equipos</span>
+            <i class="bi bi-person-lines-fill" style="font-size: 14px;"></i><span>Equipos</span>
         </a>
         <a href="#" style="font-size: 12px;">
             <i class="bi bi-calendar-check" style="font-size: 14px;"></i><span>Programar Partidos</span>
@@ -266,7 +274,9 @@ if (!$tournament_data) {
                 </button>
                 <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent">
                     <h1 class="text-3xl font-bold"><?php echo htmlspecialchars($tournament_data['name']); ?></h1>
+                    <p class="text-xl font bold text-gray-400"><?php echo htmlspecialchars($category_name['name']); ?> </p>
                     <p class="text-gray-300"><?php echo htmlspecialchars($tournament_data['description']); ?></p>
+
                 </div>
             </div>
 

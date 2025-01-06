@@ -7,18 +7,16 @@ if (!isset($_SESSION['email'])) {
 require_once "../config/connection.php";
 
 $tournament_id = $_GET['tournament_id'] ?? null;
-$version_id = $_GET['version_id'] ?? null;
-$category_id = $_GET['category_id'] ?? null;
 
-if (!$tournament_id || !$version_id) {
+if (!$tournament_id) {
     header("Location: tournaments.php");
     exit();
 }
 
 // Obtener equipos de la versión específica del torneo
-$sql = "SELECT * FROM teams WHERE tournament_id = ? AND tournament_version_id = ?  AND category_id = ?";
+$sql = "SELECT * FROM teams WHERE tournament_id = ?";
 $stmt = $con->prepare($sql);
-$stmt->bind_param("iii", $tournament_id, $version_id, $category_id);
+$stmt->bind_param("i", $tournament_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $teams = $result->fetch_all(MYSQLI_ASSOC);
@@ -118,9 +116,12 @@ $teams = $result->fetch_all(MYSQLI_ASSOC);
         <a href="./" style="font-size: 12px;">
             <i class="bi bi-house-door" style="font-size: 14px; "></i><span>Inicio</span>
         </a>
-        <a href="./tournaments.php" style="font-size: 12px; background: linear-gradient(90deg, #6b21a8, #7c3aed);
-        color: white; box-shadow: 0 5px 15px rgba(109, 40, 217, 0.4); transform: scale(1.05);">
+        <a href="./tournaments.php" style="font-size: 12px;">
             <i class="bi bi-trophy" style="font-size: 14px;"></i><span>Mis Torneos</span>
+        </a>
+        <a href="./tournament_all_teams.php?tournament_id=<?php echo $tournament_id?>" style="font-size: 12px; background: linear-gradient(90deg, #6b21a8, #7c3aed);
+        color: white; box-shadow: 0 5px 15px rgba(109, 40, 217, 0.4); transform: scale(1.05);">
+            <i class="bi bi-person" style="font-size: 14px;"></i><span>Mis Equipos</span>
         </a>
         <a href="./mis_equipos.php" style="font-size: 12px;">
             <i class="bi bi-person-lines-fill" style="font-size: 14px;"></i><span>Equipos</span>
@@ -224,17 +225,10 @@ $teams = $result->fetch_all(MYSQLI_ASSOC);
         <!-- Teams Content -->
         <div class="p-6">
         <div class="flex justify-between mb-4">
-                <a href="tournament_overview.php?tournament_id=<?php echo $tournament_id; ?>&version_id=<?php echo $version_id; ?>&category_id=<?php echo $category_id ?>"
+                <a href="tournament-detail.php?id=<?php echo $tournament_id; ?>"
                     class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center space-x-2">
                     <i class="ri-arrow-left-line"></i>
                 </a>
-            </div>
-            <div class="mt-6 text-center">
-                <button id="generateFixture"
-                    class="w-full mb-6 p-4 border-2 border-dashed border-gray-700 rounded-lg text-gray-400 hover:text-white hover:border-[#7C3AED] transition-colors">
-                    <i class="ri-add-line text-xl"></i>
-                    <span>Generar Fixture</span>
-                </button>
             </div>
 
             <!-- Teams List -->
@@ -376,43 +370,7 @@ $teams = $result->fetch_all(MYSQLI_ASSOC);
         }
     </script>
 
-<script>
-    document.getElementById('generateFixture').addEventListener('click', function () {
-        const tournamentId = <?php echo json_encode($tournament_id); ?>;
-        const versionId = <?php echo json_encode($version_id); ?>;
-        const categoryId = <?php echo json_encode($category_id); ?>;
-        fetch('../controllers/generate_fixture.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ tournament_id: tournamentId, version_id: versionId, category_id: categoryId })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Éxito',
-                    text: 'Fixture generado exitosamente.',
-                    background: '#1a1d24',
-                    color: '#ffffff'
-                }).then(() => {
-                    window.location.href = `calendar.php?tournament_id=${tournamentId}&version_id=${versionId}$category_id=${categoryId}`;
-                });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'No se pudo generar el fixture: ' + data.message,
-                    background: '#1a1d24',
-                    color: '#ffffff'
-                });
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
-</script>
+
 </body>
 
 </html>

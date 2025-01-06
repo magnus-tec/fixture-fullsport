@@ -53,6 +53,7 @@ $members = $result_members->fetch_all(MYSQLI_ASSOC);
     <link href="../public/css/style.css" rel="stylesheet">
     <!-- Enlace a Bootstrap JS con Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         /* Basic Styles */
         body {
@@ -276,6 +277,10 @@ $members = $result_members->fetch_all(MYSQLI_ASSOC);
                         <button onclick="window.location.href='players.php?id=<?php echo $team['id']; ?>'"
                             class="px-6 py-3 bg-[#7C3AED] text-white rounded-md hover:bg-[#6D28D9] text-sm font-semibold transition duration-200">
                             Ver mis Jugadores
+                        </button>
+                        <button id="btn-delete-team"
+                        class="px-6 py-3 bg-red-600 text-white rounded hover:bg-red-700">
+                        Eliminar Equipo
                         </button>
                     </div>
                 </div>
@@ -1071,6 +1076,52 @@ $members = $result_members->fetch_all(MYSQLI_ASSOC);
                 reader.readAsDataURL(input.files[0]);
             }
         }
+    </script>
+
+    <script>
+        document.getElementById("btn-delete-team").addEventListener("click", () =>{
+            Swal.fire({
+            title: '¿Estás seguro que quieres eliminar este equipo?',
+            text: "Esta acción no se puede deshacer",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                try {
+                    fetch('../controllers/delete_team.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            team_id: <?php echo $team_id; ?>
+                        })
+                    }).then((res) => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire(
+                                'Eliminado',
+                                'El equipo ha sido eliminado.',
+                                'success'
+                            );
+                            window.location.href = "tournaments.php";
+                        } else {
+                            alert('Error al eliminar el equipo: ' + data.message);
+                        }
+                    });
+
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error al eliminar el equipo');
+                }
+            }
+        });
+            
+        });
     </script>
 </body>
 

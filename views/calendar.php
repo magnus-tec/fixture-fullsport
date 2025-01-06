@@ -21,7 +21,7 @@ $stmt = $con->prepare("SELECT f.*, ht.name as home_team, at.name as away_team
                        JOIN teams ht ON f.home_team_id = ht.id 
                        JOIN teams at ON f.away_team_id = at.id 
                        WHERE f.tournament_version_id = ? 
-                       ORDER BY f.match_date, f.match_time");
+                       ORDER BY id DESC");
 $stmt->bind_param("i", $version_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -198,8 +198,7 @@ $fixtures = $result->fetch_all(MYSQLI_ASSOC);
     <!-- Content -->
     <div class="content" id="content">
         <div class="flex justify-between mb-4">
-                <a href="tournament_overview.php?tournament_id=<?php echo $tournament_id; ?>
-                &version_id=<?php echo $version_id; ?>&category_id=<?php echo $category_id ?>"
+                <a href="tournament_overview.php?tournament_id=<?php echo $tournament_id; ?>&version_id=<?php echo $version_id; ?>&category_id=<?php echo $category_id ?>"
                     class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center space-x-2">
                     <i class="ri-arrow-left-line"></i>
                 </a>
@@ -213,6 +212,7 @@ $fixtures = $result->fetch_all(MYSQLI_ASSOC);
                             <?php echo htmlspecialchars($fixture['home_team']); ?> vs
                             <?php echo htmlspecialchars($fixture['away_team']); ?>
                         </div>
+                        <?php echo $fixture['id'] ?>
                         <div class="text-sm text-gray-400 text-center">
                             Fecha: <?php echo date('d/m/Y', strtotime($fixture['match_date'])); ?>
                         </div>

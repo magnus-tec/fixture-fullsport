@@ -15,9 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $logoFileName = $defaultLogoPath;
 
     if ($tournament_id && $tournament_version_id && $team_name && $country && $color && $category_id) {
-        $checkTeamSql = "SELECT * FROM teams WHERE name = ? AND tournament_version_id = ?";
+        $checkTeamSql = "SELECT * FROM teams WHERE name = ? AND tournament_version_id = ? AND category_id = ?";
         $checkTeamStmt = $con->prepare($checkTeamSql);
-        $checkTeamStmt->bind_param("si", $team_name, $tournament_version_id);
+        $checkTeamStmt->bind_param("sii", $team_name, $tournament_version_id, $category_id);
         $checkTeamStmt->execute();
         $result = $checkTeamStmt->get_result();
 
