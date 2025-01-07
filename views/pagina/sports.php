@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/fixturepro/config/connection.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/fixturepro/config/connection.php'; //'../config/connection.php'
 
 // Obtener torneos de la base de datos
 $sql = "SELECT t.*, tv.id AS version_id FROM tournaments t JOIN tournament_versions tv ON t.id = tv.tournament_id"; // Asegúrate de que la tabla se llame 'tournaments'
@@ -186,33 +186,33 @@ $tournaments = $result->fetch_all(MYSQLI_ASSOC);
             <input type="text" id="tournamentSearch" placeholder="Buscar torneo..." oninput="filterTournaments()">
         </div>
 
-<!-- Lista de torneos -->
-<div class="card-container">
-    <?php foreach ($tournaments as $tournament): ?>
-        <div class="card">
-            <!-- Imagen como portada -->
-            <?php if (!empty($tournament['logo_image'])): ?>
-                <img src="/fixturepro/public/<?php echo htmlspecialchars($tournament['logo_image']); ?>"
-                     alt="Logo del torneo <?php echo htmlspecialchars($tournament['name']); ?>" class="card-img">
-            <?php else: ?>
-                <img src="/fixturepro/public/img/sportslogo.png" alt="Logo predeterminado" class="card-img">
-            <?php endif; ?>
-            <!-- Contenido debajo de la imagen -->
-            <div class="card-content">
-                <h3><?php echo htmlspecialchars($tournament['name']); ?></h3>
-                <p><?php echo htmlspecialchars($tournament['description']); ?></p>
-                <div class="tags">
-                    <span class="tag"><?php echo htmlspecialchars($tournament['competition_type']); ?></span>
-                    <span class="tag"><?php echo htmlspecialchars($tournament['sport_type']); ?></span>
-                    <span class="tag"><?php echo htmlspecialchars($tournament['gender']); ?></span>
-                </div><br>
-                <a href="./vista_paginas/tournament_overview_pagina.php?tournament_id=<?php echo htmlspecialchars($tournament['id']); ?>&version_id=<?php echo htmlspecialchars($tournament['version_id']); ?>" class="button mt-4">
-                    Ver Torneo
-                </a>
-            </div>
+        <!-- Lista de torneos -->
+        <div class="card-container">
+            <?php foreach ($tournaments as $tournament): ?>
+                <div class="card">
+                    <!-- Imagen como portada -->
+                    <?php if (!empty($tournament['logo_image'])): ?>
+                        <img src="/fixturepro/public/<?php echo htmlspecialchars($tournament['logo_image']); ?>"
+                            alt="Logo del torneo <?php echo htmlspecialchars($tournament['name']); ?>" class="card-img">
+                    <?php else: ?>
+                        <img src="/fixturepro/public/img/sportslogo.png" alt="Logo predeterminado" class="card-img">
+                    <?php endif; ?>
+                    <!-- Contenido debajo de la imagen -->
+                    <div class="card-content">
+                        <h3><?php echo htmlspecialchars($tournament['name']); ?></h3>
+                        <p><?php echo htmlspecialchars($tournament['description']); ?></p>
+                        <div class="tags">
+                            <span class="tag"><?php echo htmlspecialchars($tournament['competition_type']); ?></span>
+                            <span class="tag"><?php echo htmlspecialchars($tournament['sport_type']); ?></span>
+                            <span class="tag"><?php echo htmlspecialchars($tournament['gender']); ?></span>
+                        </div><br>
+                        <a href="./vista_paginas/tournament_overview_pagina.php?tournament_id=<?php echo htmlspecialchars($tournament['id']); ?>&version_id=<?php echo htmlspecialchars($tournament['version_id']); ?>" class="button mt-4">
+                            Ver Torneo
+                        </a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-    <?php endforeach; ?>
-</div>
 
     </section>
 </body>
