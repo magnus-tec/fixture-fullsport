@@ -7,6 +7,10 @@ if (!isset($_SESSION['email'])) {
 
 require_once "../config/connection.php";
 
+$tournament_id = $_GET['tournament_id'] ?? null;
+$version_id = $_GET['version_id'] ?? null;
+$category_id = $_GET['category_id'] ?? null;
+
 // Obtener detalles del equipo
 $team_id = $_GET['id'] ?? null;
 if (!$team_id) {
@@ -255,7 +259,10 @@ $members = $result_members->fetch_all(MYSQLI_ASSOC);
                     </div>
                 </div>
             </div>
-
+            <a href="tournament_teams.php?tournament_id=<?php echo $tournament_id; ?>&version_id=<?php echo $version_id; ?>&category_id=<?php echo $category_id ?>"
+                    class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center space-x-2 w-12">
+                    <i class="ri-arrow-left-line"></i>
+                </a>
             <h1 class="text-4xl font-semibold text-white text-center mb-4">DETALLES DEL EQUIPO</h1>
             <!-- Contenedor General con grid para dividir en 3/4 y 1/4 -->
             <div class="max-w-7xl mx-auto p-6">

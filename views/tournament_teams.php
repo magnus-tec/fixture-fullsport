@@ -250,7 +250,7 @@ $teams = $result->fetch_all(MYSQLI_ASSOC);
                         <h3 class="font-semibold text-center"><?php echo htmlspecialchars($team['name']); ?></h3>
                         <p class="text-sm text-gray-400 text-center">@<?php echo htmlspecialchars($team['country']); ?>
                         </p> <!-- Asegúrate de que 'username' esté en la base de datos -->
-                        <a href="team-detail.php?id=<?php echo $team['id']; ?>"
+                        <a href="team-detail.php?id=<?php echo $team['id']; ?>&tournament_id=<?php echo $tournament_id; ?>&version_id=<?php echo $version_id; ?>&category_id=<?php echo $category_id ?>"
                             class="mt-2 px-4 py-2 bg-[#7C3AED] text-white rounded-md hover:bg-[#6D28D9] transition-colors">Administrar</a>
                     </div>
                 <?php endforeach; ?>

@@ -212,7 +212,6 @@ $fixtures = $result->fetch_all(MYSQLI_ASSOC);
                             <?php echo htmlspecialchars($fixture['home_team']); ?> vs
                             <?php echo htmlspecialchars($fixture['away_team']); ?>
                         </div>
-                        <?php echo $fixture['id'] ?>
                         <div class="text-sm text-gray-400 text-center">
                             Fecha: <?php echo date('d/m/Y', strtotime($fixture['match_date'])); ?>
                         </div>

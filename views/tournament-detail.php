@@ -148,7 +148,19 @@ $categoriesAndVersions = fetchCategoriesAndVersions($con, $tournament_id);
             margin: 0 auto;
             flex-grow: 1;
         }
-
+        .menu-item{
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .submenu{
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease;
+        }
+        .menu-item:hover .submenu {
+            max-height: 200px;
+        }
         @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
@@ -183,13 +195,17 @@ $categoriesAndVersions = fetchCategoriesAndVersions($con, $tournament_id);
         <a href="./" style="font-size: 12px;">
             <i class="bi bi-house-door" style="font-size: 14px; "></i><span>Inicio</span>
         </a>
-        <a href="./tournaments.php" style="font-size: 12px; background: linear-gradient(90deg, #6b21a8, #7c3aed);
-        color: white; box-shadow: 0 5px 15px rgba(109, 40, 217, 0.4); transform: scale(1.05);">
-            <i class="bi bi-trophy" style="font-size: 14px;"></i><span>Mis Torneos</span>
-        </a>
-        <a href="./tournament_all_teams.php?tournament_id=<?php echo $tournament_id?>" style="font-size: 12px;">
-            <i class="bi bi-person" style="font-size: 14px;"></i><span>Mis Equipos</span>
-        </a>
+        <div class="menu-item">
+            <a href="./tournaments.php" style="font-size: 12px; background: linear-gradient(90deg, #6b21a8, #7c3aed);
+            color: white; box-shadow: 0 5px 15px rgba(109, 40, 217, 0.4); transform: scale(1.05);">
+                <i class="bi bi-trophy" style="font-size: 14px;"></i><span>Mis Torneos</span>
+            </a>
+            <div class="submenu">
+                <a href="./tournament_all_teams.php?tournament_id=<?php echo $tournament_id?>" style="font-size: 12px;">
+                    <i class="bi bi-person" style="font-size: 14px;"></i><span>Mis Equipos</span>
+                </a>
+            </div>
+        </div>
         <a href="./mis_equipos.php" style="font-size: 12px;">
             <i class="bi bi-person-lines-fill" style="font-size: 14px;"></i><span>Equipos</span>
         </a>
