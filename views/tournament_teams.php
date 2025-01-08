@@ -398,7 +398,7 @@ $teams = $result->fetch_all(MYSQLI_ASSOC);
                     background: '#1a1d24',
                     color: '#ffffff'
                 }).then(() => {
-                    window.location.href = `calendar.php?tournament_id=${tournamentId}&version_id=${versionId}$category_id=${categoryId}`;
+                    window.location.href = `calendar.php?tournament_id=${tournamentId}&version_id=${versionId}&category_id=${categoryId}`;
                 });
             } else {
                 Swal.fire({

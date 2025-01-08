@@ -478,6 +478,11 @@ $categoriesAndVersions = fetchCategoriesAndVersions($con, $tournament_id);
                         }
                         ?>
                     </select>
+
+                    <a class="ml-5 p-2 bg-gray-600 rounded cursor-not-allowed"
+                    href="javascript:void(0)"
+                    id="generateFixtureLink"
+                    >Generar fixture</a>
                 </div>
 
 
@@ -746,8 +751,12 @@ $categoriesAndVersions = fetchCategoriesAndVersions($con, $tournament_id);
                                 document.getElementById('searchVersion').addEventListener('change', function() {
                                     let selectedValue = this.value;
                                     let tournament_id = <?php echo $tournament_id; ?>;
+                                    const linkElement = document.getElementById('generateFixtureLink');
                                     console.log(selectedValue);
                                     if (selectedValue) {
+                                        linkElement.classList.remove('bg-gray-600', 'cursor-not-allowed');
+                                        linkElement.classList.add('bg-red-600', 'hover:bg-red-500');
+                                        linkElement.href = `tournament_fixture.php?tournament_id=<?php echo $tournament_id; ?>&version_id=${selectedValue}`;
                                         fetch('../controllers/consulta_versiones.php', {
                                                 method: 'POST',
                                                 headers: {
@@ -805,6 +814,9 @@ $categoriesAndVersions = fetchCategoriesAndVersions($con, $tournament_id);
                                             })
                                             .catch(error => console.error('Error:', error));
                                     } else {
+                                        linkElement.classList.add('bg-gray-600', 'cursor-not-allowed');
+                                        linkElement.classList.remove('bg-red-600', 'hover:bg-red-500');
+                                        linkElement.href = 'javascript:void(0)';
                                         console.error('Faltan parámetros: selectedValue o tournamentId');
                                     }
                                 });
